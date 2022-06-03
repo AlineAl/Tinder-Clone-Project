@@ -1,6 +1,8 @@
 import { createServer } from "http";
-import express from "express";
-import { ApolloServer, gql } from "apollo-server-express";
+
+const { ApolloServer, gql } = require("apollo-server-express");
+const { prisma } = require("../src/prisma/client");
+const express = require("express");
 
 const startServer = async () => {
   const app = express();
@@ -8,13 +10,42 @@ const startServer = async () => {
 
   const typeDefs = gql`
     type Query {
-      hello: String
+      users: [User]
+      messages: [Message]
+    }
+
+    type User {
+      id: ID!
+      firstname: String!
+      email: String!
+      password: String!
+      description: String
+      day: Int!
+      month: Int!
+      year: Int!
+      show_gender: Boolean
+      Identity: String
+      Interest: String
+      url: String
+      matches: [String]
+    }
+
+    type Message {
+      id: ID!
+      from_userId: String
+      to_userId: String
+      message: String
     }
   `;
 
   const resolvers = {
     Query: {
-      hello: () => "Hello world!",
+      users: () => {
+        return prisma.user.findMany();
+      },
+      messages: () => {
+        return prisma.message.findMany();
+      },
     },
   };
 

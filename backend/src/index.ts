@@ -1,7 +1,7 @@
 import { createServer } from "http";
 
 const { ApolloServer, gql } = require("apollo-server-express");
-import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
+import { ApolloServerPluginLandingPageLocalDefault } from "apollo-server-core";
 import prisma from "./prisma/client";
 const express = require("express");
 
@@ -55,7 +55,7 @@ const startServer = async () => {
     resolvers,
     csrfPrevention: true,
     cache: "bounded",
-    plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
+    plugins: [ApolloServerPluginLandingPageLocalDefault()],
   });
 
   await apolloServer.start();

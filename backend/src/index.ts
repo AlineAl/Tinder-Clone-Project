@@ -62,7 +62,6 @@ const startServer = async () => {
 
   apolloServer.applyMiddleware({
     app,
-    path: "/api",
   });
 
   httpServer.listen({ port: process.env.PORT || 4000 }, () =>
